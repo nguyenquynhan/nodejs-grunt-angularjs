@@ -96,17 +96,14 @@ module.exports = function(grunt) {
             }
         }
     },
-    supervisor: {
-      target: {
-        script: "bin\\www"
-      }
-    },
-    express: {
-        livereloadServer: {
-          server: path.resolve(__dirname, 'server'),
-          bases: path.resolve(__dirname, 'public'),
-          livereload: true, // if you just specify `true`, default port `35729` will be used
-          serverreload: true
+    imagemin: {                          // Task        
+        dynamic: {                         // Another target
+          files: [{
+            expand: true,                  // Enable dynamic expansion
+            cwd: 'img/',                   // Src matches are relative to this path
+            src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
+            dest: 'public/bundle/img/'                  // Destination path prefix
+          }]
         }
       }
   });
@@ -116,6 +113,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
 
   
   grunt.registerTask('default', ['cssmin:dev','ngtemplates:dev', 'uglify:dev' ]);
